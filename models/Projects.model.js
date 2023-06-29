@@ -1,6 +1,7 @@
 const { Schema, model } = require("mongoose");
 
-const noteSchema = new Schema({
+const noteSchema = new Schema(
+  {
     title: {
       type: String,
       required: true
@@ -12,10 +13,11 @@ const noteSchema = new Schema({
         type:Number,
         required: true
     }
-    {
-      timestamps: true,
-    }
-  });
+  },
+  {
+    timestamps: true,
+  }
+  );
   
 
 // TODO: Please make sure you edit the User model to whatever makes sense in this case
