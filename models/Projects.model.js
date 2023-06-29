@@ -12,6 +12,9 @@ const noteSchema = new Schema({
         type:Number,
         required: true
     }
+    {
+      timestamps: true,
+    }
   });
   
 
@@ -45,7 +48,6 @@ const projectSchema = new Schema(
 
   },
   {
-    // this second object adds extra properties: `createdAt` and `updatedAt`
     timestamps: true,
   }
 );
