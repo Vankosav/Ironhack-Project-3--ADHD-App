@@ -18,6 +18,24 @@ const userSchema = new Schema(
       type: String,
       required: [true, "Name is required."],
     },
+    surname: {
+      type: String,
+      required: [true, "Surname is required."],
+    },
+    role: {
+      type: String,
+      enum: ["user", "student", "teacher"],
+      required: true,
+    },
+    projects: {
+      type: [],
+    },
+    notesList: {
+      type: [],
+    },
+    pomodoro: {
+      type: Number,
+    },
   },
   {
     // this second object adds extra properties: `createdAt` and `updatedAt`
