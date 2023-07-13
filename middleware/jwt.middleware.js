@@ -10,10 +10,12 @@ const isAuthenticated = jwt({
 
 // Function used to extract the JWT token from the request's 'Authorization' Headers
 function getTokenFromHeaders(req) {
+  console.log("Authorization header:", req.headers.authorization);
+
   // Check if the token is available on the request Headers
   if (
     req.headers.authorization &&
-    req.headers.authorization.split(" ")[0] === "Bearer"
+    req.headers.authorization.startsWith("Bearer ")
   ) {
     // Get the encoded token string and return it
     const token = req.headers.authorization.split(" ")[1];
@@ -23,7 +25,9 @@ function getTokenFromHeaders(req) {
   return null;
 }
 
+
 // Export the middleware so that we can use it to create protected routes
 module.exports = {
   isAuthenticated,
 };
+

@@ -10,8 +10,11 @@ const jwt = require("jsonwebtoken");
 // Require the User model in order to interact with the database
 const User = require("../models/User.model");
 
+const Notes = require("../models/Notes.model");
+
 // Require necessary (isAuthenticated) middleware in order to control access to specific routes
 const { isAuthenticated } = require("../middleware/jwt.middleware.js");
+const { getNotes, createNotes  } = require("../controllers/notesController");
 
 // How many rounds should bcrypt run the salt (default - 10 rounds)
 const saltRounds = 10;
@@ -142,5 +145,11 @@ router.get("/verify", isAuthenticated, (req, res, next) => {
   // Send back the token payload object containing the user data
   res.status(200).json(req.payload);
 });
+
+
+router.route("/dashboard").get(isAuthenticated, getNotes);
+console.log('Request reached /dashboard endpoint');
+router.route("/dashboard").post(isAuthenticated, createNotes);
+console.log('Request reached /dashboard endpoint');
 
 module.exports = router;
