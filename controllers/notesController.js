@@ -32,4 +32,50 @@ const createNotes = asyncHandler(async (req, res) => {
   }
 });
 
-module.exports = { getNotes, createNotes };
+/*const getOneNote = asyncHandler(async (req, res) => {
+  const note = await Notes.findById(req.params.id);
+
+  if (note) {
+    res.json(note);
+  } else {
+    res.status(404).json({ message : "Note not found!"})
+  }
+});*/
+
+const updateNote = asyncHandler(async (req, res) => {
+    const { title, content } = req.body;
+    const token = req.headers.authorization.split(" ")[1];
+    const decoded = jwt.verify(token, process.env.TOKEN_SECRET);
+    req.user = await User.findById(decoded._id).select("-password");
+    const note = await Notes.findById(req.params.id);
+  
+    if (note.owner.toString() !== req.user._id.toString()) {
+      res.status(401);
+    throw new Error("You can't perform this action")
+    }
+    if (note) {
+        note.title = title;
+        note.content = content; 
+
+        const updatedNote = await note.save();
+        res.json(updatedNote); 
+    }
+  })
+  
+  const deleteNote = asyncHandler(async (req, res) => {
+    const note = await Notes.findById(req.params.id);
+    const token = req.headers.authorization.split(" ")[1];
+    const decoded = jwt.verify(token, process.env.TOKEN_SECRET);
+    req.user = await User.findById(decoded._id).select("-password");
+  
+    if (note.owner.toString() !== req.user._id.toString()) {
+        res.status(401);
+      throw new Error("You can't perform this action")
+      }
+      if (note) {
+        await note.deleteOne();
+        res.json({ message : "Note Removed"})
+      }
+  })
+
+module.exports = { getNotes, createNotes, updateNote, deleteNote };

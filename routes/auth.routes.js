@@ -14,7 +14,7 @@ const Notes = require("../models/Notes.model");
 
 // Require necessary (isAuthenticated) middleware in order to control access to specific routes
 const { isAuthenticated } = require("../middleware/jwt.middleware.js");
-const { getNotes, createNotes  } = require("../controllers/notesController");
+const { getNotes, createNotes, updateNote, deleteNote } = require("../controllers/notesController");
 
 // How many rounds should bcrypt run the salt (default - 10 rounds)
 const saltRounds = 10;
@@ -150,6 +150,8 @@ router.get("/verify", isAuthenticated, (req, res, next) => {
 router.route("/dashboard").get(isAuthenticated, getNotes);
 console.log('Request reached /dashboard endpoint');
 router.route("/dashboard").post(isAuthenticated, createNotes);
+console.log('Request reached /dashboard endpoint');
+router.route("/dashboard/:id").put(isAuthenticated, updateNote).delete(isAuthenticated, deleteNote);
 console.log('Request reached /dashboard endpoint');
 
 module.exports = router;
