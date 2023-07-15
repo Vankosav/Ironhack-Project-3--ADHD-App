@@ -147,11 +147,11 @@ router.get("/verify", isAuthenticated, (req, res, next) => {
 });
 
 
-router.route("/dashboard").get(isAuthenticated, getNotes);
+/*router.route("/dashboard").get(isAuthenticated, getNotes);
 console.log('Request reached /dashboard endpoint');
 router.route("/dashboard").post(isAuthenticated, createNotes);
 console.log('Request reached /dashboard endpoint');
 router.route("/dashboard/:id").put(isAuthenticated, updateNote).delete(isAuthenticated, deleteNote);
-console.log('Request reached /dashboard endpoint');
+console.log('Request reached /dashboard endpoint');*/
 
 module.exports = router;
