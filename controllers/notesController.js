@@ -13,7 +13,7 @@ const getNotes = asyncHandler(async (req, res) => {
 });
 
 const createNotes = asyncHandler(async (req, res) => {
-  const { title, content } = req.body;
+  const { title, content, date } = req.body;
 
   if (!title || !content) {
     res.status(400);
@@ -24,7 +24,9 @@ const createNotes = asyncHandler(async (req, res) => {
 
     req.user = await User.findById(decoded._id).select("-password");
 
-    const note = new Notes({ owner: req.user._id, title, content });
+    const sentences = content.split('\n').map(sentence => sentence.trim());
+
+    const note = new Notes({ owner: req.user._id, title, content: sentences, date });
 
     const createdNote = await note.save();
 
@@ -43,7 +45,7 @@ const createNotes = asyncHandler(async (req, res) => {
 });*/
 
 const updateNote = asyncHandler(async (req, res) => {
-    const { title, content } = req.body;
+    const { title, content, date } = req.body;
     const token = req.headers.authorization.split(" ")[1];
     const decoded = jwt.verify(token, process.env.TOKEN_SECRET);
     req.user = await User.findById(decoded._id).select("-password");
