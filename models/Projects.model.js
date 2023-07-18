@@ -1,6 +1,6 @@
 const { Schema, model } = require("mongoose");
 
-const noteSchema = new Schema(
+/* const noteSchema = new Schema(
   {
     title: {
       type: String,
@@ -18,7 +18,7 @@ const noteSchema = new Schema(
     timestamps: true,
   }
   );
-  
+   */
 
 // TODO: Please make sure you edit the User model to whatever makes sense in this case
 const projectSchema = new Schema(
@@ -28,20 +28,25 @@ const projectSchema = new Schema(
         ref: "User",
         required: true
     },
-    toDo: {
+    name:{
+      type: String,
+      required: true
+
+    },
+    lowPriority: {
       type: Array,
       timestamps: true
     },
-    pending: {
+    mediumPriority: {
         type: Array,
         timestamps: true
     },
-    completed:{
+    hightPriority:{
         type: Array,
         timestamps: true
     },
     notes: {
-        type: [noteSchema],
+      type: Array,
       },
     teacherMessages:{
       type: String
