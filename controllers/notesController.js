@@ -45,7 +45,7 @@ const createNotes = asyncHandler(async (req, res) => {
 });*/
 
 const updateNote = asyncHandler(async (req, res) => {
-    const { title, content, date } = req.body;
+    const { title, content } = req.body;
     const token = req.headers.authorization.split(" ")[1];
     const decoded = jwt.verify(token, process.env.TOKEN_SECRET);
     req.user = await User.findById(decoded._id).select("-password");
